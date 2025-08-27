@@ -1,4 +1,4 @@
-package com.entertainment.movie_management_system.auth.config;
+package com.entertainment.movie_management_system.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ public class SecurityConfig {
         http
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/user/signup","/error").permitAll()
+            .requestMatchers("/user/signup","/error","/v3/api-docs/**","/swagger-ui/**","/swagger-ui.html").permitAll()
             .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
             .anyRequest().authenticated()
         )

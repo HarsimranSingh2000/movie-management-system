@@ -2,7 +2,6 @@ package com.entertainment.movie_management_system.auth.controller;
 
 import jakarta.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,8 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.entertainment.movie_management_system.auth.dto.SignupRequest;
-import com.entertainment.movie_management_system.auth.exception.ErrorMapper;
 import com.entertainment.movie_management_system.auth.service.UserService;
+import com.entertainment.movie_management_system.exception.ErrorMapper;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/user")
@@ -28,6 +30,9 @@ public class UserController {
     }
 
     @PostMapping("/signup")
+    @Operation(summary = "Create a new user", description = "Return 201 if the user was successfully created.")
+    @ApiResponse(responseCode = "201", description = "User created successfully.")
+    @ApiResponse(responseCode = "400")
     ResponseEntity<Object> signup(@Valid @RequestBody SignupRequest request) {
         try {
             this.userService.createUser(request);

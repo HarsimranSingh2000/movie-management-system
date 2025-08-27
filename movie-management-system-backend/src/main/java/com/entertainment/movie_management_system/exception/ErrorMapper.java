@@ -1,4 +1,4 @@
-package com.entertainment.movie_management_system.auth.exception;
+package com.entertainment.movie_management_system.exception;
 
 import java.util.HashMap;
 import java.util.Map;
