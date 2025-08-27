@@ -1,12 +1,15 @@
-package com.entertainment.movie_management_system.auth.exception;
+package com.entertainment.movie_management_system.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import io.swagger.v3.oas.annotations.Hidden;
+
+import org.springframework.web.bind.MethodArgumentNotValidException;
+@Hidden
 @ControllerAdvice
 public class GlobalExceptionHandler {
     
@@ -17,6 +20,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
+    @Hidden
 public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
     StringBuilder strBuilder = new StringBuilder();
 
@@ -36,6 +40,7 @@ public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgume
 }
 
     @ExceptionHandler(IllegalArgumentException.class)
+    @Hidden
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
@@ -43,6 +48,7 @@ public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgume
     }
 
     @ExceptionHandler(RuntimeException.class)
+    @Hidden
     public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
