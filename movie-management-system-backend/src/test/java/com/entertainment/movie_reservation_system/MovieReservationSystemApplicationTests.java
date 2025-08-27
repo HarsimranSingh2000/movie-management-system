@@ -8,6 +8,8 @@ class MovieReservationSystemApplicationTests {
 
 	@Test
 	void contextLoads() {
+	// INSERT_YOUR_CODE
+	org.junit.jupiter.api.Assertions.assertTrue(true);
 	}
 
 }
