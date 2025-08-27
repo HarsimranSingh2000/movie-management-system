@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.entertainment</groupId>
-	<artifactId>movie-reservation-system</artifactId>
+	<artifactId>movie-management-system</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Movie Reservation System</name>
-	<description>This project is to simulate movie reservations system in real life.</description>
+	<name>Movie Management System</name>
+	<description>This project is to simulate movie management system in real life.</description>
 	<url/>
 	<licenses>
 		<license/>
