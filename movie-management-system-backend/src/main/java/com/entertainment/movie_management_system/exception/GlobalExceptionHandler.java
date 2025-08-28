@@ -19,41 +19,46 @@ public class GlobalExceptionHandler {
         this.errorMapper = errorMapper;
     }
 
+    // Helper method to build error message from validation errors
+    private String buildValidationErrorMessage(MethodArgumentNotValidException e) {
+        StringBuilder strBuilder = new StringBuilder();
+
+        e.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName;
+            try {
+                fieldName = ((FieldError) error).getField();
+            } catch (ClassCastException ex) {
+                fieldName = error.getObjectName();
+            }
+            String message = error.getDefaultMessage();
+            strBuilder.append(String.format("%s : %s ; ", fieldName, message));
+        });
+
+        // Remove the last " ; " if present
+        if (strBuilder.length() > 2) {
+            strBuilder.setLength(strBuilder.length() - 2);
+        }
+        return strBuilder.toString();
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @Hidden
-public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-    StringBuilder strBuilder = new StringBuilder();
-
-    e.getBindingResult().getAllErrors().forEach((error) -> {
-        String fieldName;
-        try {
-            fieldName = ((FieldError) error).getField();
-
-        } catch (ClassCastException ex) {
-            fieldName = error.getObjectName();
-        }
-        String message = error.getDefaultMessage();
-        strBuilder.append(String.format("%s : %s ; ", fieldName, message));
-    });
-
-    return new ResponseEntity<>(errorMapper.createErrorMap(strBuilder.substring(0, strBuilder.length()-1)), HttpStatus.BAD_REQUEST);
-}
+    public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        String errorMsg = buildValidationErrorMessage(e);
+        return new ResponseEntity<>(errorMapper.createErrorMap(errorMsg), HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(IllegalArgumentException.class)
     @Hidden
-    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body("{\"error\": \"" + ex.getMessage().replace("\"", "\\\"") + "\"}");
+    public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return new ResponseEntity<>(errorMapper.createErrorMap(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(RuntimeException.class)
     @Hidden
-    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body("{\"error\": \"" + ex.getMessage().replace("\"", "\\\"") + "\"}");
+    public ResponseEntity<Object> handleRuntimeException(RuntimeException ex) {
+        return new ResponseEntity<>(errorMapper.createErrorMap(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
-
+    
     // You can add more handlers for other exception types as needed
 }
