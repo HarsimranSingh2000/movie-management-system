@@ -7,4 +7,5 @@ import com.entertainment.movie_management_system.auth.entity.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByEmail(String email);
     boolean existsByMobileNumber(String mobileNumber);
+    User findByEmail(String email); // Method to fetch user details by email (to be used for password matching)
 }
