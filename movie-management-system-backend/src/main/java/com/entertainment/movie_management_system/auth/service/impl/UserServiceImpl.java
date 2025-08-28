@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(request.getEmail());
         user.setMobileNumber(request.getMobileNumber());
         user.setPassword(passwordEncoder.encode(request.getPassword())); // Secure hash
-        user.setUserRole("USER"); // Enforce default here
+        user.setUserRole("U"); // Enforce default here
 
         userRepository.save(user);
     }

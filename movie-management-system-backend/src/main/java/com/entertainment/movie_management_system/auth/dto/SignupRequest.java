@@ -33,8 +33,6 @@ public class SignupRequest {
     )
     private String password;
 
-    private String userRole = "USER"; // Optional override, but default to USER in service
-
     // Getters and Setters
     public String getFirstName() {
         return firstName;
@@ -82,13 +80,5 @@ public class SignupRequest {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
     }
 }
