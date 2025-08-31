@@ -60,5 +60,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorMapper.createErrorMap(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
     
+
+    
     // You can add more handlers for other exception types as needed
 }

@@ -8,4 +8,11 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     user_role VARCHAR(50)
 );
--- TODO: Fix migration, currently tables need to be created manually
+CREATE TABLE user_otp (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    otp VARCHAR(255) NOT NULL,
+    otp_status BOOLEAN,
+    generated_on TIMESTAMP,
+    otp_token VARCHAR(255)
+);

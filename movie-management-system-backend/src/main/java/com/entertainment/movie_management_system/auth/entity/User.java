@@ -6,6 +6,10 @@ import jakarta.persistence.*;
 @Table(name = "users")
 public class User {
 
+    public User() {
+        // JPA needs this
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,7 +30,7 @@ public class User {
     private String password;
 
     @Column(name = "user_role")
-    private String userRole;;
+    private String userRole;
 
     // Getters and Setters
     public Long getId() {

@@ -3,22 +3,23 @@ package com.entertainment.movie_management_system.config;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
+import java.time.Duration;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.Map;
 
 @Service
 public class JwtConfig {
 
-    private static final long EXPIRATION_TIME = 1000 * 60 * 20; // 20 mins
     private final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256); // or use a custom key
 
-    public String generateToken(String email, String role) {
+    public String generateToken(String subject, Map <String, Object> claims, Duration duration) {
         return Jwts.builder()
-                .setSubject(email)
-                .claim("role", role)
+                .setSubject(subject)
+                .addClaims(claims)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .setExpiration(new Date(System.currentTimeMillis() + duration.toMillis()))
                 .signWith(secretKey)
                 .compact();
     }
@@ -42,6 +43,14 @@ public class JwtConfig {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
+    }
+
+    public Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 }
 

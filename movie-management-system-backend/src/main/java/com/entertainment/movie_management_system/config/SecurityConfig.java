@@ -17,7 +17,7 @@ public class SecurityConfig {
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/error").permitAll()
-            .requestMatchers("/user/signup","/user/signin").permitAll() //user api's
+            .requestMatchers("/user/signup","/user/signin","/user/requestotp","/user/validateotp","/user/resetpassword").permitAll() //user api's
             .requestMatchers("/v3/api-docs/**","/swagger-ui/**","/swagger-ui.html").permitAll() //swagger api's
             .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
             .anyRequest().authenticated()
